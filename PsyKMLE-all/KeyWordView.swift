@@ -21,10 +21,12 @@ struct KeyWordView: View {
                 
                 
                 Button("저장") {
-                    if keyWord.trimmingCharacters(in: .whitespaces).isEmpty {
-                        
-                    } else {
-                        question.subject.append(keyWord.trimmingCharacters(in: .whitespaces))
+                    let keyword = SubjectKeywordSearch.normalize(keyWord)
+                    let alreadyHasKeyword = question.subject.contains {
+                        SubjectKeywordSearch.normalize($0) == keyword
+                    }
+                    if !keyword.isEmpty, !alreadyHasKeyword {
+                        question.subject.append(keyword)
                     }
                     dismiss()
                 }.padding(.trailing)

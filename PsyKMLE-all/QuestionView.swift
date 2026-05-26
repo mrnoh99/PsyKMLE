@@ -92,7 +92,7 @@ struct QuestionView: View {
                 suggestionSet.insert(item)
             }
         }
-        return suggestionSet.sorted().filter { $0.lowercased().contains(searchTerm.lowercased()) }
+        return suggestionSet.sorted().filter { SubjectKeywordSearch.suggestionMatches(tag: $0, searchTerm: searchTerm) }
     }
     
     func deviceOrientation() -> String! {
@@ -138,7 +138,7 @@ struct QuestionView: View {
                 selectedDxOrTx == "전체" ? true : $0.classifi.contains(selectedDxOrTx) )
             && (
                 searchTerm == "" ? true :
-                    $0.subject.contains(searchTerm))
+                    SubjectKeywordSearch.matches(subject: $0.subject, searchTerm: searchTerm))
             && (
                 isStaredOn == false ? true :
                     $0.stared == isStaredOn
