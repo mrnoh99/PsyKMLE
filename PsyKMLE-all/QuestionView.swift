@@ -42,6 +42,9 @@ struct QuestionView: View {
     @State var isUnsolvedOn : Bool = false
     @State var isFalseOn : Bool = false
     @State var expanded : Bool = false
+    @State private var inspectorSheetDetent: PresentationDetent = {
+        UIDevice.current.userInterfaceIdiom == .pad ? .fraction(0.9) : .large
+    }()
     let listYears: [String] = ["전체", "2026","2025", "2024", "2023", "2022", "2021", "2020", "2019"]
     let listStates: [String] = ["전체", "정답", "오답", "풀지않음" ]
     let listDxOrTx: [String] = ["전체",  "Dx", "Tx", "Tx-Drug"]
@@ -458,9 +461,7 @@ struct QuestionView: View {
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: self.$presentInspector) {
             InspectorView(presentInspector: $presentInspector, allQuestions: listProblems)
-            
-            //    .interactiveDismissDisabled(true)
-                .presentationDetents([.medium])
+                .inspectorSheetPresentation(selection: $inspectorSheetDetent)
         }
     }
 
@@ -497,4 +498,21 @@ struct QuestionView: View {
 
 #Preview {
     QuestionView()
+}
+
+private extension View {
+    @ViewBuilder
+    func inspectorSheetPresentation(selection: Binding<PresentationDetent>) -> some View {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            self
+                .presentationDetents(
+                    [.fraction(0.8), .fraction(0.9), .large],
+                    selection: selection
+                )
+                .presentationSizing(.page)
+        } else {
+            self
+                .presentationDetents([.medium, .large], selection: selection)
+        }
+    }
 }

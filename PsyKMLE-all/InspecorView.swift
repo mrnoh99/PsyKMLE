@@ -24,11 +24,18 @@ struct InspectorView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 12) {
                         introSection
-                        solveSection
+                        startSection
+                        studySection
+                        listSection
+                        singleExamSection
+                        batchExamSection
                         filterSection
+                        resultSection
                         iconSection
                         answerSection
-                        saveSection
+                        statsSection
+                        dataSection
+                        contactSection
                     }
                     .padding()
                 }
@@ -67,22 +74,138 @@ private extension InspectorView {
     }
 
     var introSection: some View {
-        Text("""
-        이 앱은 2019년 이후 의사 국가 고시의 정신건강의학 기출 문제 학습 앱입니다.
-        문제는 기출문제에 기초하여 출제의 기본 의도를 충실히 유지하도록 출제하였으며, 기출문제를 학습하는 것과 동일한 내용을 학습할 수 있도록 구성하였습니다.
-        """)
-        .inspectorBodyStyle()
-    }
-
-    var solveSection: some View {
         Group {
-            Text("문제 풀기 및 답안확인")
+            Text("앱 소개")
                 .inspectorTitleStyle()
 
-            HStack(alignment: .firstTextBaseline, spacing: 0) {
-                Text("[ 문제풀기 ]와 [ 답안보기 ] 중 한가지를 선택합니다. [ 문제풀기 ]와 [ 답안보기 ]는 한 문제씩 풀 수도 있고 모아서 풀 수도 있습니다. 문제 문항별로 풀거나 답을 확인하려면 문제리스트의 원하는 문항을 터치하여 선택하면 됩니다. 필터한 문항리스트를 모아서 풀거나 답안을 확인하려면 [")
-                Image(systemName: "play.square")
-                Text("] 버튼을 선택하면 됩니다.")
+            Text("""
+            2019~2026년 의사 국가고시 정신건강의학 기출문제 학습용 앱입니다. 기출문제의 출제 의도를 유지한 형태로 구성되어 있으며, 기출 학습과 동일한 내용을 다룹니다.
+
+            문항은 진단(Dx), 치료(Tx), 약물(Tx-Drug) 등으로 분류되어 있으며, 연도·키워드·풀이 상태별로 골라 공부할 수 있습니다.
+            """)
+            .inspectorBodyStyle()
+        }
+    }
+
+    var startSection: some View {
+        Group {
+            Text("시작하기")
+                .inspectorTitleStyle()
+
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(alignment: .firstTextBaseline, spacing: 0) {
+                    Text("앱을 실행하면 문항 목록 화면이 나타납니다. 우측 상단 [")
+                    Image(systemName: "info.circle")
+                    Text("] 버튼을 누르면 이 사용설명을 다시 볼 수 있습니다.")
+                }
+
+                Text("""
+                화면 상단 구성:
+                • [문제풀기] / [답안보기]: 학습 모드 전환
+                • [▶] 버튼: 필터로 고른 문항을 연속으로 보기
+                • [문항 필터링]: 연도·상태·분류·별표·메모 조건 설정
+                • 검색창: 키워드로 문항 검색
+                """)
+            }
+            .inspectorBodyStyle()
+        }
+    }
+
+    var studySection: some View {
+        Group {
+            Text("문제풀기 · 답안보기")
+                .inspectorTitleStyle()
+
+            VStack(alignment: .leading, spacing: 8) {
+                Text("상단에서 [문제풀기] 또는 [답안보기]를 선택합니다. iPhone에서는 [문제] / [답안]으로 짧게 표시됩니다.")
+
+                Text("문제풀기")
+                    .bold()
+                Text("문항을 선택해 답을 고르고 [제출]합니다. 제출 후 정답·해설 화면으로 이동합니다.")
+
+                Text("답안보기")
+                    .bold()
+                Text("이미 푼 문항의 정답, 해설, 키워드, 메모를 바로 확인합니다. 답을 고르지 않고도 해설을 볼 수 있습니다.")
+
+                HStack(alignment: .firstTextBaseline, spacing: 0) {
+                    Text("• 한 문항씩: 목록에서 문항을 터치합니다.\n• 여러 문항: 필터로 범위를 정한 뒤 [")
+                    Image(systemName: "play.rectangle")
+                    Text("] 버튼을 누릅니다.")
+                }
+
+                Text("문제풀기와 답안보기 모두 같은 필터 결과를 사용합니다. 필터 라벨의 「선택 N / 총 M」 숫자로 현재 범위를 확인하세요.")
+            }
+            .inspectorBodyStyle()
+        }
+    }
+
+    var listSection: some View {
+        Group {
+            Text("문항 목록")
+                .inspectorTitleStyle()
+
+            VStack(alignment: .leading, spacing: 8) {
+                Text("각 행에는 번호, 별표, 풀이 상태 아이콘, 연도, 문항 앞부분(intro), 문항 ID가 표시됩니다.")
+
+                HStack(alignment: .firstTextBaseline, spacing: 0) {
+                    Text("• 별표([")
+                    Image(systemName: "star")
+                    Text("] / [")
+                    Image(systemName: "star.fill")
+                    Text("]): 터치하여 중요 문항 표시. 별표 필터와 함께 사용합니다.")
+                }
+
+                HStack(alignment: .firstTextBaseline, spacing: 0) {
+                    Text("• 메모([")
+                    Image(systemName: "note.text.badge.plus")
+                    Text("] / [")
+                    Image(systemName: "checkmark")
+                    Text("]): 목록에서 바로 메모 작성·수정. 메모가 있으면 ✓ 아이콘이 표시됩니다.")
+                }
+
+                Text("문항을 터치하면 선택한 모드(문제풀기 또는 답안보기)에 맞는 화면으로 이동합니다.")
+            }
+            .inspectorBodyStyle()
+        }
+    }
+
+    var singleExamSection: some View {
+        Group {
+            Text("한 문항씩 풀기")
+                .inspectorTitleStyle()
+
+            VStack(alignment: .leading, spacing: 8) {
+                Text("목록에서 문항을 선택하면 문제 본문과 답가지가 표시됩니다.")
+
+                Text("""
+                • 답가지를 터치하여 선택합니다. (중복 선택 가능)
+                • 선택한 답가지를 다시 터치하면 선택을 취소할 수 있습니다.
+                • [제출]을 누르면 채점되고 해설 화면으로 이동합니다.
+                • 아무 답도 고르지 않고 [제출]하면 「풀지 않음」 상태로 기록됩니다.
+                • [제출] 후에는 해당 문항의 답을 변경할 수 없습니다.
+                """)
+            }
+            .inspectorBodyStyle()
+        }
+    }
+
+    var batchExamSection: some View {
+        Group {
+            Text("연속 풀기")
+                .inspectorTitleStyle()
+
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(alignment: .firstTextBaseline, spacing: 0) {
+                    Text("필터로 범위를 정한 뒤 [")
+                    Image(systemName: "play.rectangle")
+                    Text("] 버튼을 누르면 선택된 문항이 한 화면에 나열됩니다.")
+                }
+
+                Text("""
+                • 각 문항 아래에서 답가지를 고르고 [제출]합니다.
+                • 답을 하나 이상 선택한 뒤 [제출]하면 해당 문항은 더 이상 수정할 수 없습니다.
+                • 모든 문항을 푼 뒤 [정답확인]을 누르면 답안보기 모드로 전환되어 해설을 확인할 수 있습니다.
+                """)
             }
             .inspectorBodyStyle()
         }
@@ -94,27 +217,68 @@ private extension InspectorView {
                 .inspectorTitleStyle()
 
             VStack(alignment: .leading, spacing: 10) {
+                Text("[문항 필터링]을 펼치면 아래 조건을 조합할 수 있습니다. 조건은 AND(동시 만족)로 적용됩니다.")
+
+                Text("연도 · 문제별 · 분류")
+                    .bold()
+
+                Text("""
+                • 연도별: 2019~2026, 전체
+                • 문제별: 전체, 정답, 오답, 풀지 않음
+                • 분류별: 전체, Dx(진단), Tx(치료), Tx-Drug(약물)
+                """)
+
+                Text("예: 「2025년 + 오답 + Dx」로 2025년 진단 문제 중 틀린 문항만 복습할 수 있습니다.")
+
                 HStack(alignment: .firstTextBaseline, spacing: 0) {
-                    Text("1. 별표 아이콘 ([")
+                    Text("별표 ([")
                     Image(systemName: "star")
-                    Text("])은 별표로 표시한 문항을 필터합니다. 각 문항의 별표를 터치하면 별표시가 토글되어 ([")
+                    Text("] / [")
                     Image(systemName: "star.fill")
-                    Text("]) 상태로 바뀝니다.")
+                    Text("]): 켜면 별표 표시한 문항만 보기. 문항·답안 화면에서 토글할 수 있습니다.")
                 }
-
-                Text("첫 화면인 문제 리스트 화면과 답안확인 화면에서 별표는 토글할 수 있습니다.")
 
                 HStack(alignment: .firstTextBaseline, spacing: 0) {
-                    Text("2. 메모 아이콘 ([")
+                    Text("메모 ([")
                     Image(systemName: "note.text.badge.plus")
-                    Text("])은 각 문항 중 메모에 내용이 있는 문항을 필터합니다. 메모는 사용자가 원하는 내용을 저장하며 현재는 텍스트만 저장됩니다. 메모 항목에 내용이 있는 문항은 ([")
+                    Text("] / [")
                     Image(systemName: "checkmark")
-                    Text("])로 아이콘이 바뀝니다.")
+                    Text("]): 켜면 메모가 있는 문항만 보기. 메모는 문항·답안 화면에서 작성합니다.")
                 }
 
-                Text("3. 메모는 문제리스트 화면과 답안확인 화면에서 확인 및 작성이 가능합니다.")
+                Text("키워드 검색")
+                    .bold()
 
-                Text("4. 키워드를 사용한 필터가 가능하며, 키워드는 입력하기 시작하면 현재 키워드에 포함된 항목의 선택리스트가 제시됩니다. 영문 키워드는 저장 시 소문자로 변환됩니다. 키워드는 사용자가 각 문항별로 추가하거나 삭제할 수 있습니다.")
+                Text("""
+                • 목록 상단 검색창에 키워드를 입력하면 해당 키워드가 포함된 문항만 표시됩니다.
+                • 입력 중 등록된 키워드 제안 목록이 나타납니다. 제안을 탭하면 바로 검색됩니다.
+                • 부분 일치를 지원합니다. (예: 「우울」→ 주요우울장애)
+                • 동의어·약어도 검색됩니다. (예: PTSD, 사회공포증, cbt, SSRI)
+                • 문항별로 키워드를 추가·삭제할 수 있으며, 영문은 저장 시 소문자로 변환됩니다.
+                • 앱 업데이트 후에도 직접 추가한 키워드는 유지됩니다.
+                • 키워드 필터는 연도·상태·분류 필터와 함께 적용됩니다.
+                """)
+            }
+            .inspectorBodyStyle()
+        }
+    }
+
+    var resultSection: some View {
+        Group {
+            Text("해설 · 키워드 · 메모")
+                .inspectorTitleStyle()
+
+            VStack(alignment: .leading, spacing: 8) {
+                Text("답안보기 화면(또는 문제 제출 후)에서 아래 내용을 확인·편집할 수 있습니다.")
+
+                Text("""
+                • 정답 여부: 정답 / 오답 / 풀지 않음
+                • 답가지: 내가 고른 답은 초록색, 정답은 굵은 글씨와 ✓ 표시
+                • 해설(comment): 문항 하단에 상세 해설 표시
+                • KeyWords: 문항별 키워드 목록. [추가]로 키워드 입력, ✓ 버튼으로 삭제
+                • 메모: 개인 학습 메모. [메모] 버튼으로 작성·수정
+                • 별표: 화면 상단 별 아이콘을 터치하여 토글
+                """)
             }
             .inspectorBodyStyle()
         }
@@ -122,31 +286,27 @@ private extension InspectorView {
 
     var iconSection: some View {
         Group {
-            Text("문항리스트 각 문항의 아이콘")
+            Text("문항 상태 아이콘")
                 .inspectorTitleStyle()
 
             VStack(alignment: .leading, spacing: 10) {
                 HStack(alignment: .firstTextBaseline, spacing: 0) {
-                    Text("문항리스트 각 문항의 앞부분의 아이콘 [ ")
+                    Text("각 문항 앞 아이콘 [ ")
                     Image(systemName: "questionmark.circle.fill")
                     Text(" ")
                     Image(systemName: "checkmark.circle.fill")
                     Text(" ")
                     Image(systemName: "xmark.circle.fill")
-                    Text(" ]은 각각 풀지 않음, 정답, 오답을 표시합니다.")
+                    Text(" ]은 풀지 않음 · 정답 · 오답을 나타냅니다.")
                 }
 
-                HStack(alignment: .firstTextBaseline, spacing: 0) {
-                    Text("이는 [ 문제별 ] 픽업리스트의 항목 분류와 연결됩니다. 아직 풀지 않은 문제는 [ ")
-                    Image(systemName: "questionmark.circle.fill")
-                    Text(" ]으로 표시되며, 처음 프로그램을 설치하면 모든 문제가 이 상태로 표시됩니다.")
-                }
-
-                HStack(alignment: .firstTextBaseline, spacing: 0) {
-                    Text("문제를 풀면서 답을 선택하지 않고 [ 제출 ]을 선택한 경우에도 [ ")
-                    Image(systemName: "questionmark.circle.fill")
-                    Text(" ]으로 표시됩니다. 풀지 않은 문제는 정답률과 오답률을 계산할 때 오답으로 계산합니다.")
-                }
+                Text("""
+                • 처음 설치 시 모든 문항은 풀지 않음 상태입니다.
+                • 답을 고르지 않고 [제출]하면 풀지 않음으로 남습니다.
+                • 정답·오답·풀지 않음 상태는 목록과 답안 화면 모두에 표시됩니다.
+                • 연속 풀기에서 [정답확인] 후 상단에 정답률·오답률·미제출 수가 표시됩니다.
+                • 풀지 않은 문항은 정답률·오답률 계산 시 오답으로 집계됩니다.
+                """)
             }
             .inspectorBodyStyle()
         }
@@ -154,22 +314,75 @@ private extension InspectorView {
 
     var answerSection: some View {
         Group {
-            Text("답가지는 중복선택이 가능합니다.")
-                .inspectorTitleStyle()
-
-            Text("선택한 답가지를 취소하려면 다시 터치합니다. 제출한 선택은 취소할 수 없습니다.")
-                .inspectorBodyStyle()
-        }
-    }
-
-    var saveSection: some View {
-        Group {
-            Text("제출한 답, 메모, 키워드는 저장됩니다.")
+            Text("답안 선택 (중복 답 문항)")
                 .inspectorTitleStyle()
 
             Text("""
-            데이터는 사용자의 장치에 저장됩니다. 프로그램을 종료한 후 다시 시작하여도 그 동안 작성해 제출한 답, 메모, 키워드는 리셋되지 않습니다. 리셋을 원하면 프로그램을 데이터를 포함하여 삭제한 뒤 앱 스토어에서 다시 설치해야 합니다. 이런 경우 그 동안 입력한 데이터가 모두 삭제되고 제공자의 초기 데이터로 리셋된다는 점을 유의하십시오.
+            일부 문항은 정답이 두 가지 이상입니다(「두 가지 고르시오」 유형).
+
+            • 답가지는 중복 선택이 가능합니다.
+            • 선택한 답가지를 다시 터치하면 선택을 취소할 수 있습니다.
+            • 모든 정답을 정확히 고른 경우에만 정답으로 처리됩니다.
+            • [제출]한 답은 변경할 수 없습니다. 다시 풀려면 필터에서 해당 문항을 찾아 답안보기로 확인하세요.
             """)
+            .inspectorBodyStyle()
+        }
+    }
+
+    var statsSection: some View {
+        Group {
+            Text("정답률 표시")
+                .inspectorTitleStyle()
+
+            Text("""
+            연속 풀기 후 [정답확인]을 누르면 화면 상단에 아래 통계가 표시됩니다.
+
+            • 총문제수: 필터로 선택된 문항 수
+            • 정답: 정답 수와 정답률(%)
+            • 오답: 오답 수와 오답률(%). 풀지 않은 문항도 오답에 포함됩니다.
+            • 미제출: 아직 [제출]하지 않은 문항 수
+            """)
+            .inspectorBodyStyle()
+        }
+    }
+
+    var dataSection: some View {
+        Group {
+            Text("데이터 저장")
+                .inspectorTitleStyle()
+
+            Text("""
+            제출한 답, 메모, 별표, 사용자 추가 키워드는 기기 내부(SwiftData)에 저장됩니다. 앱을 종료했다가 다시 실행해도 유지됩니다.
+
+            앱 업데이트 시 문항·해설·기본 키워드는 최신 내용으로 갱신되며, 학습 기록과 직접 추가한 키워드는 보존됩니다. 시드 데이터에 없는 문항 ID는 자동으로 정리됩니다.
+
+            데이터는 서버로 자동 전송되지 않습니다. iCloud 백업·기기 변경·앱 삭제 시 학습 기록이 사라질 수 있으니 주의하세요.
+
+            모든 데이터를 초기화하려면 앱을 삭제한 뒤 App Store에서 다시 설치해야 합니다.
+            """)
+            .inspectorBodyStyle()
+        }
+    }
+
+    var contactSection: some View {
+        Group {
+            Text("문의하기")
+                .inspectorTitleStyle()
+
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(alignment: .firstTextBaseline, spacing: 0) {
+                    Text("화면 하단 [")
+                    Image(systemName: "info.circle")
+                    Text("] 버튼을 누르면 메일 작성 화면이 열립니다. (기기에 메일 계정이 설정되어 있어야 합니다.)")
+                }
+
+                Text("""
+                • 수신: jsnoh2010@gmail.com
+                • 메모 CSV 파일이 자동 첨부됩니다. (문항 ID, intro, 메모 내용)
+                • 아주대 의대 학생은 학번과 이름을 본문에 적어 주세요.
+                • 오류 신고, 문항 관련 문의, 기능 제안 등 자유롭게 보내 주세요.
+                """)
+            }
             .inspectorBodyStyle()
         }
     }
