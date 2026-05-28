@@ -10,8 +10,6 @@ import SwiftUI
 import SwiftData
 
 struct QuestionView: View {
-    @AppStorage("isWelcomeScreenOver") var isWelcomeScreenOver = false
-    //   @State var checkWelcomeScreen: Bool = false
     @Environment(\.modelContext) var dbContext
     
     @Environment(\.scenePhase) private var scenePhase

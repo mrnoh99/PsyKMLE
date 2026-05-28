@@ -1373,11 +1373,8 @@ struct PsyKMA2024: App {
         
         WindowGroup {
             ContentView()
-            
-        } .modelContainer(appContainer)
-        
-        
-        
+        }
+        .modelContainer(appContainer)
     }
     
 }

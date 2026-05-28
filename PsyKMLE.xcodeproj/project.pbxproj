@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		FAAE28DD2E3DE59F00E20DD0 /* PsyKMLE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PsyKMLE.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAAE28DD2E3DE59F00E20DD0 /* PsyKMLE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PsyKMLE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		FAAE28DF2E3DE59F00E20DD0 /* PsyKMLE */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "PsyKMLE";
+			path = PsyKMLE;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -63,10 +63,10 @@
 			fileSystemSynchronizedGroups = (
 				FAAE28DF2E3DE59F00E20DD0 /* PsyKMLE */,
 			);
-			name = "PsyKMLE";
+			name = PsyKMLE;
 			packageProductDependencies = (
 			);
-			productName = "PsyKMLE";
+			productName = PsyKMLE;
 			productReference = FAAE28DD2E3DE59F00E20DD0 /* PsyKMLE.app */;
 			productType = "com.apple.product-type.application";
 		};
@@ -253,7 +253,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "PsyKMLE/PsyKMLE.entitlements";
+				CODE_SIGN_ENTITLEMENTS = PsyKMLE/PsyKMLE.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -281,7 +281,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = njs.PsyKMLE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -305,7 +305,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = "PsyKMLE/PsyKMLE.entitlements";
+				CODE_SIGN_ENTITLEMENTS = PsyKMLE/PsyKMLE.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -333,7 +333,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 15.5;
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = njs.PsyKMLE;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
