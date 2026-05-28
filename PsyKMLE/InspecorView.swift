@@ -1,20 +1,10 @@
 import SwiftUI
-import MessageUI
 
 struct InspectorView: View {
     @Environment(\.dismiss) private var dismiss
 
     @Binding var presentInspector: Bool
-
-    @State private var presentCompositMemo: Bool = false
-    @State private var result: Result<MFMailComposeResult, Error>? = nil
-    @State private var isShowingMailView = false
-
-    let allQuestions: [Question]
-
-    private var compositMemo: String {
-        Self.allMemoString(allQuestions: allQuestions)
-    }
+    @State private var showCreditView = false
 
     var body: some View {
         VStack(spacing: 0) {
@@ -24,6 +14,7 @@ struct InspectorView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 12) {
                         introSection
+                        acknowledgementSection
                         startSection
                         studySection
                         listSection
@@ -364,32 +355,37 @@ private extension InspectorView {
         }
     }
 
+    var acknowledgementSection: some View {
+        Group {
+            Text("Acknowledgement")
+                .inspectorTitleStyle()
+
+            Text(Acknowledgement.text)
+            .inspectorBodyStyle()
+        }
+    }
+
     var contactSection: some View {
         Group {
             Text("문의하기")
                 .inspectorTitleStyle()
 
-            VStack(alignment: .leading, spacing: 8) {
-                HStack(alignment: .firstTextBaseline, spacing: 0) {
-                    Text("화면 하단 [")
-                    Image(systemName: "info.circle")
-                    Text("] 버튼을 누르면 메일 작성 화면이 열립니다. (기기에 메일 계정이 설정되어 있어야 합니다.)")
-                }
+            Text("""
+            앱 사용, 오류 신고, 문항 관련 문의, 기능 제안은 아래 이메일로 연락해 주세요.
 
-                Text("""
-                • 수신: jsnoh2010@gmail.com
-                • 메모 CSV 파일이 자동 첨부됩니다. (문항 ID, intro, 메모 내용)
-                • 아주대 의대 학생은 학번과 이름을 본문에 적어 주세요.
-                • 오류 신고, 문항 관련 문의, 기능 제안 등 자유롭게 보내 주세요.
-                """)
-            }
+            • jsnoh2010@gmail.com
+            • 고객지원 페이지: https://mrnoh99.github.io/PsyKMLE/docs/support.html
+            """)
             .inspectorBodyStyle()
         }
     }
 
     var footerView: some View {
-        HStack(alignment: .top, spacing: 8) {
-            Spacer()
+        VStack(spacing: 12) {
+            Button("Acknowledgement 보기") {
+                showCreditView = true
+            }
+            .buttonStyle(.bordered)
 
             Text("""
             프로그램 작성 및 문제 작성: 노재성
@@ -397,43 +393,13 @@ private extension InspectorView {
             jsnoh2010@gmail.com
             """)
             .font(.headline)
-            .padding()
-
-            Button {
-                isShowingMailView.toggle()
-            } label: {
-                Image(systemName: "info.circle")
-            }
-            .padding(.top, 16)
-            .sensoryFeedback(
-                .impact(weight: .heavy, intensity: 0.9),
-                trigger: presentCompositMemo
-            )
-            .springLoadingBehavior(.enabled)
-            .disabled(!MFMailComposeViewController.canSendMail())
-            .sheet(isPresented: $isShowingMailView) {
-                MailView(
-                    isShowing: $isShowingMailView,
-                    result: $result,
-                    messageBodyForFile: compositMemo
-                )
-            }
+            .multilineTextAlignment(.center)
+            .padding(.horizontal)
         }
-    }
-}
-
-// MARK: - Helpers
-private extension InspectorView {
-    static func allMemoString(allQuestions: [Question]) -> String {
-        var compositMemo = "No,Question,Memo\n"
-
-        allQuestions.forEach { question in
-            let intro = question.intro.replacingOccurrences(of: "\n", with: " ")
-            let memo = question.memo.replacingOccurrences(of: "\n", with: " ")
-            compositMemo += "\(question.id),\(intro),\(memo)\n"
+        .padding(.bottom, 8)
+        .sheet(isPresented: $showCreditView) {
+            CreditView()
         }
-
-        return compositMemo
     }
 }
 

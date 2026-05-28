@@ -416,24 +416,14 @@ struct QuestionView: View {
         //         Spacer()
         //       } //Hstack  마지막
         .toolbar {
-            Spacer()
-            Button(action:  {
-                
-                presentInspector.toggle()
-            }, label: {
-                HStack {
+            ToolbarItem(placement: .topBarTrailing) {
+                Button {
+                    presentInspector.toggle()
+                } label: {
                     Image(systemName: "info.circle")
-                    //.foregroundStyle(.blue)
-                }})
-            //.padding()
-            .frame(alignment: .top)
-            .sensoryFeedback(
-                .impact(weight: .heavy, intensity: 0.9), trigger: presentInspector )
-            //   .buttonStyle(.borderedProminent)
-            .springLoadingBehavior(.enabled)
-            .scaleEffect(1.0 )
-            
-           
+                }
+                .buttonStyle(.plain)
+            }
         }
        
         List(allQuestions) { question in
@@ -458,7 +448,7 @@ struct QuestionView: View {
         .navigationTitle("의사국시 대비 정신건강의학 풀이집(19-26)")
         .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: self.$presentInspector) {
-            InspectorView(presentInspector: $presentInspector, allQuestions: listProblems)
+            InspectorView(presentInspector: $presentInspector)
                 .inspectorSheetPresentation(selection: $inspectorSheetDetent)
         }
     }
