@@ -3,3 +3,8 @@
 KMLE 정신과 문제풀이 앱 Testflight 수신 희망자.xlsx
 tester_import.csv
 tester_import.numbers
+
+# macOS / Xcode user-specific
+.DS_Store
+*.xcuserstate
+**/xcuserdata/
