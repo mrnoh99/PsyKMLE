@@ -19,6 +19,9 @@ struct IndividualExamView: View, Equatable {
             .onAppear {
                 answerBranch = question.q.sorted()
                 buttonDisabled = question.solved != 0
+                for id in question.choice {
+                    selectedRows.insert(id)
+                }
             }
 
         ForEach(answerBranch) { item in
