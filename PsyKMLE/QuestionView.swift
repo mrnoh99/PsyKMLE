@@ -23,20 +23,9 @@ struct QuestionView: View {
     @State private var isStaredOn: Bool = false
     @State private var hasMemoFilter: Bool = false
     @State private  var  stared: Bool = false
-    @State var isActive : Bool = false
     @State private var presentInspector: Bool = false
-    @State private var presentAnswerView: Bool = false
-    @State private var presentResultView: Bool = false
-    @State private var numberOfSelectedProblems = 0
-    @State var selectedQuestions : [Question]  = []
     @State var examOrResult : Bool  = true
     @State var visibility: NavigationSplitViewVisibility = .all
-    //  @State var memoText: String = ""
-    @State var questionsDisabled : Bool = true
-    @State var  showAlert : Bool = false
-    @State var showPopOverMemo : Bool = false
-    @State var isUnsolvedOn : Bool = false
-    @State var isFalseOn : Bool = false
     @State var expanded : Bool = false
     @State private var inspectorSheetDetent: PresentationDetent = {
         UIDevice.current.userInterfaceIdiom == .pad ? .fraction(0.9) : .large
