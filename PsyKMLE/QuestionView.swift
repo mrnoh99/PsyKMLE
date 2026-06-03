@@ -21,11 +21,9 @@ struct QuestionView: View {
     @State private var selectedValueForState: Int = 0
     @State private  var  selectedDxOrTx: String = "전체"
     @State private var isStaredOn: Bool = false
-    @State private var isMemoEmpty: Bool = false
+    @State private var hasMemoFilter: Bool = false
     @State private  var  stared: Bool = false
     @State var isActive : Bool = false
-    @State var resultListOfQuestion : [Question] = []
-    @State var answerListOfQuestion  : [Question] = []
     @State private var presentInspector: Bool = false
     @State private var presentAnswerView: Bool = false
     @State private var presentResultView: Bool = false
@@ -147,7 +145,7 @@ struct QuestionView: View {
             && (
                 // let m =  $0.memo.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
                 
-                isMemoEmpty == false ? true : $0.memo.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty  == !(isMemoEmpty)
+                hasMemoFilter == false ? true : !$0.memo.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
             )
         }
         
@@ -206,7 +204,10 @@ struct QuestionView: View {
                         
                         
                         if examOrResult {
-                            TakeExamView(allQuestions: problemSet , answerListOfQuestion: $answerListOfQuestion,  resultListOfQuestion: $resultListOfQuestion, examOrResult: $examOrResult, visibility: $visibility, presentInspector: $presentInspector ) } else{ TakeResultView( allQuestions: problemSet , answerListOfQuestion: $answerListOfQuestion, resultListOfQuestion: $resultListOfQuestion, stared: $stared) }
+                            TakeExamView(allQuestions: problemSet, examOrResult: $examOrResult, visibility: $visibility, presentInspector: $presentInspector)
+                        } else {
+                            TakeResultView(allQuestions: problemSet, stared: $stared)
+                        }
                     }, label: {
                         Image(systemName: "play.rectangle")
                         
@@ -291,21 +292,21 @@ struct QuestionView: View {
                               
                             
                             
-                            Toggle(isOn: $isMemoEmpty,  label: {
+                            Toggle(isOn: $hasMemoFilter,  label: {
                                 HStack {
                                     
-                                    Image(systemName: isMemoEmpty ?   "checkmark" :"note.text.badge.plus" )
+                                    Image(systemName: hasMemoFilter ?   "checkmark" :"note.text.badge.plus" )
                                         .symbolRenderingMode(.multicolor)
-                                    //   .symbolEffect(.disappear, isActive: !isMemoEmpty)
+                                    //   .symbolEffect(.disappear, isActive: !hasMemoFilter)
                                 }}).toggleStyle(.button)
                                 .sensoryFeedback(
-                                    .impact(weight: .heavy, intensity: 0.9), trigger: isMemoEmpty )
-                                .symbolEffect(.bounce,  value: isMemoEmpty)
+                                    .impact(weight: .heavy, intensity: 0.9), trigger: hasMemoFilter )
+                                .symbolEffect(.bounce,  value: hasMemoFilter)
                                 .springLoadingBehavior(.enabled)
                                 .onAppear(perform: {
                                     QuestionView.prepareList(listProblems: listProblems, allQuestions: allQuestions)
                                 })
-                                .onChange(of: isMemoEmpty) {
+                                .onChange(of: hasMemoFilter) {
                                     QuestionView.prepareList(listProblems: listProblems, allQuestions: allQuestions )
                                 }
                             

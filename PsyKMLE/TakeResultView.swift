@@ -1,88 +1,48 @@
 import SwiftUI
 
-struct TakeResultView:  View {
-    @ObservationIgnored    var allQuestions : [Question] = []
-    @Binding  var answerListOfQuestion : [Question]
-    @Binding var resultListOfQuestion : [Question]
-    @Binding var stared : Bool
-    // @Binding var memoText : String
-    
-    
+struct TakeResultView: View {
+    @ObservationIgnored var allQuestions: [Question] = []
+    @Binding var stared: Bool
+
     var body: some View {
-        
-        
-        VStack{
-            
-            /*  Text("모아풀기  문제수: \(QuestionView.numberOfSelectedProblems(arrayInUsing:  allQuestions))").multilineTextAlignment(.center)
-             .padding(.top, 5) */
-            
-            Text (percentInString())
-            
+        VStack {
+            Text(percentInString())
+
             List(allQuestions) { question in
-                if  let i = allQuestions.firstIndex(of: question)   {    ResultView(question: question,  stared: $stared, sequenceOfProblem: i+1)
+                if let i = allQuestions.firstIndex(of: question) {
+                    ResultView(question: question, stared: $stared, sequenceOfProblem: i + 1)
                 }
-            } .scrollIndicators(.hidden)
-            
+            }
+            .scrollIndicators(.hidden)
         }
     }
-    
-    
-    
+
     func percentInString() -> String {
-        
         let total = numberOfSelected()
-        if total != 0 {
-            let wrong = numberOfWrong()
-            let  correct = numberOfCorrect()
-            //  let unsolved = numberOfUnsolved()
-            let  ratioCorrect = Double(correct)/Double(total) * 100
-            let  ratioWrong = Double(wrong)/Double(total) * 100
-            let  formatedCorrectRatio = String(format: "%.0f", ratioCorrect)
-            let  formatedWrongRatio = String(format: "%.0f", ratioWrong)
-            let  message =  "총문제수:\(numberOfSelected()) 정답:\(numberOfCorrect())(\(formatedCorrectRatio)%) 오답:\(numberOfWrong())(\(formatedWrongRatio)% 미제출:\(numberOfUnsolved()))  "
-            return message
-        }
-        else {
-            return ""
-        }
+        guard total != 0 else { return "" }
+        let correct = numberOfCorrect()
+        let wrong = numberOfWrong()
+        let ratioCorrect = Double(correct) / Double(total) * 100
+        let ratioWrong = Double(wrong) / Double(total) * 100
+        let formatedCorrectRatio = String(format: "%.0f", ratioCorrect)
+        let formatedWrongRatio = String(format: "%.0f", ratioWrong)
+        return "총문제수:\(total) 정답:\(correct)(\(formatedCorrectRatio)%) 오답:\(wrong)(\(formatedWrongRatio)%) 미제출:\(numberOfUnsolved())"
     }
-    
-    
-    
+
     func numberOfCorrect() -> Int {
-        var   i = 0
-        for question in allQuestions {
-            if question.choice == question.answer {
-                i += 1
-            }
-        }
-        return i
+        allQuestions.filter { $0.solved == 1 }.count
     }
-    
+
+    // solved==2 인 문항만 오답으로 집계 (미제출 solved==0 제외)
     func numberOfWrong() -> Int {
-        var   i = 0
-        for question in allQuestions {
-            if question.choice != question.answer {
-                i += 1
-            }
-        }
-        return i
+        allQuestions.filter { $0.solved == 2 }.count
     }
-    
+
     func numberOfSelected() -> Int {
-        return allQuestions.count
-        
+        allQuestions.count
     }
+
     func numberOfUnsolved() -> Int {
-        var   i = 0
-        for question in allQuestions {
-            if question.solved == 0 {
-                i += 1
-            }
-        }
-        return i
+        allQuestions.filter { $0.solved == 0 }.count
     }
-    
-    
-    
 }

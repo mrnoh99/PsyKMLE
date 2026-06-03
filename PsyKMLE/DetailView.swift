@@ -76,8 +76,6 @@ struct DetailView: View {
                 Button(action:  {
                     showDetails = true
                     
-                //    answerListOfQuestion.removeAll()
-                  //  resultListOfQuestion.append(question)
                     let selected  = selectedRows.sorted()
                     let isCorrect = selected == question.answer
                     question.choice = selected

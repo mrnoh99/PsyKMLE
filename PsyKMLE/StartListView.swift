@@ -93,19 +93,7 @@ struct StartListView: View {
     }
     
     
-    
-    static func  messageCorrectOrNot(question: Question) -> String {
-        var message = ""
-        if question.choice.isEmpty {
-            message = "풀지않음"}
-        else {
-            message = question.choice.sorted() == question.answer.sorted() ? "정답" : "오답"
-        }
-        return message
-    }
-    
-    
-    
+
 }
 
 
