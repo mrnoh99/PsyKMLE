@@ -21,7 +21,7 @@ struct WelcomeView: View {
                     .bold()
                     .foregroundStyle(.white)
 
-                Text("2026.7월 예정 의사국가고시 정신의학 대비")
+                Text("의사국가고시 정신의학 대비")
                     .font(.title2)
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.white)
