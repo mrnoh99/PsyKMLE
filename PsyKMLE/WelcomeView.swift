@@ -8,6 +8,10 @@ struct WelcomeView: View {
         Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
     }
 
+    private var appBuild: String {
+        Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""
+    }
+
     var body: some View {
         ZStack {
             Color(white: 0.333)
@@ -26,7 +30,7 @@ struct WelcomeView: View {
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.white)
 
-                Text("Version \(appVersion)")
+                Text("Version \(appVersion) (Build \(appBuild))")
                     .font(.subheadline)
                     .foregroundStyle(.white.opacity(0.7))
 
