@@ -50,6 +50,15 @@ class Question: Identifiable, Comparable, Equatable {
         return lhs.id == rhs.id
     }
     
+    /// 화면 표시용 연도 문자열. 한 해에 시험이 두 차례 치러진 경우 "2026-2" → "2026년 2차"로 표시한다.
+    var yearLabel: String {
+        let parts = year.split(separator: "-", maxSplits: 1)
+        if parts.count == 2, !parts[1].isEmpty {
+            return "\(parts[0])년 \(parts[1])차"
+        }
+        return "\(year)년"
+    }
+    
     /// 앱에 포함된 최신 문제 내용을 반영한다. 사용자 진행 데이터와 직접 추가한 키워드는 유지한다.
     func applySeedContent(from seed: Question) {
         let userSubjects = Self.userAddedSubjects(stored: subject, seed: seed.subject)

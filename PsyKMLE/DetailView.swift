@@ -15,7 +15,7 @@ struct DetailView: View {
     var body: some View {
         VStack {
             ScrollView {
-                Text("\(question.year)년(\(question.id)) \n \(question.main)")
+                Text("\(question.yearLabel)(\(question.id)) \n \(question.main)")
                     .padding()
                     .textSelection(.disabled)
                     .background(.background.secondary, in: .rect(cornerRadius: 20))

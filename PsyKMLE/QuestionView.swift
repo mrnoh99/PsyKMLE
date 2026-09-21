@@ -30,7 +30,7 @@ struct QuestionView: View {
     @State private var inspectorSheetDetent: PresentationDetent = {
         UIDevice.current.userInterfaceIdiom == .pad ? .fraction(0.9) : .large
     }()
-    let listYears: [String] = ["전체", "2026","2025", "2024", "2023", "2022", "2021", "2020", "2019"]
+    let listYears: [String] = ["전체", "2026-2", "2026-1", "2025", "2024", "2023", "2022", "2021", "2020", "2019"]
     let listStates: [String] = ["전체", "정답", "오답", "풀지않음" ]
     let listDxOrTx: [String] = ["전체",  "Dx", "Tx", "Tx-Drug"]
     
