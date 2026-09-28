@@ -8,3 +8,8 @@ tester_import.numbers
 .DS_Store
 *.xcuserstate
 **/xcuserdata/
+
+# 빌드 산출물
+.build/
+build/
+DerivedData/
