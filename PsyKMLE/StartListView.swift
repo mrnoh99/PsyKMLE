@@ -41,7 +41,7 @@ struct StartListView: View {
                     Text(question.year)
                         .monospacedDigit()
                         .fixedSize()
-                    sentenceText(showsYear: false)
+                    sentenceText(isCompact: false)
                     memoButton
                 }
             } else {
@@ -56,7 +56,7 @@ struct StartListView: View {
                             .frame(width: iconWidth, height: iconWidth)
                     }
                     .frame(width: numberWidth)
-                    sentenceText(showsYear: true)
+                    sentenceText(isCompact: true)
                     memoButton
                 }
             }
@@ -87,17 +87,18 @@ struct StartListView: View {
             }
     }
 
-    // 문제 문장은 남는 폭을 모두 쓰고 가로·세로 가운데에 맞춘다.
+    // 문제 문장은 남는 폭을 모두 쓰고 세로 가운데에 맞춘다.
+    // iPad는 가로도 가운데 정렬하고, iPhone은 왼쪽 정렬해 여러 줄이 되어도 줄 시작이 맞게 한다.
     // iPhone에서는 연도 칸이 없으므로 문장 앞에 연도를 다른 색(파랑·굵게)으로 붙여 구분한다.
-    private func sentenceText(showsYear: Bool) -> some View {
+    private func sentenceText(isCompact: Bool) -> some View {
         let sentence = "\(question.intro)  (\(question.id))"
-        let text: Text = showsYear
+        let text: Text = isCompact
             ? Text("\(Text(question.year).foregroundStyle(Color.blue).bold())  \(sentence)")
             : Text(sentence)
         return text
             .textSelection(.disabled)
-            .multilineTextAlignment(.center)
-            .frame(maxWidth: .infinity, alignment: .center)
+            .multilineTextAlignment(isCompact ? .leading : .center)
+            .frame(maxWidth: .infinity, alignment: isCompact ? .leading : .center)
     }
 
     private var memoButton: some View {
