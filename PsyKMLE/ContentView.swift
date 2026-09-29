@@ -8,10 +8,11 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @AppStorage("welcomeShownForVersion") private var welcomeShownForVersion = ""
+    @AppStorage("welcomeShownForRelease") private var welcomeShownForRelease = ""
 
+    /// 버전뿐 아니라 빌드가 바뀌어도 시작화면을 한 번 다시 보여준다.
     private var shouldShowWelcome: Bool {
-        welcomeShownForVersion != AppInfo.version
+        welcomeShownForRelease != AppInfo.releaseKey
     }
 
     var body: some View {

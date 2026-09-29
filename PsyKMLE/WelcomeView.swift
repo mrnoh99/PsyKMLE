@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct WelcomeView: View {
-    @AppStorage("welcomeShownForVersion") private var welcomeShownForVersion = ""
+    @AppStorage("welcomeShownForRelease") private var welcomeShownForRelease = ""
     @State private var showStartButton = false
 
     var body: some View {
@@ -32,7 +32,7 @@ struct WelcomeView: View {
         }
         .safeAreaInset(edge: .bottom) {
             Button("시작하기") {
-                welcomeShownForVersion = AppInfo.version
+                welcomeShownForRelease = AppInfo.releaseKey
             }
             .font(.headline)
             .frame(maxWidth: .infinity)
