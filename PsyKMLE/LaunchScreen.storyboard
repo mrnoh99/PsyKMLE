@@ -27,6 +27,12 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Version 3.0 (Build 10)" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="version-label">
+                                <rect key="frame" x="20" y="502" width="353" height="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="1" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
                         <color key="backgroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -39,6 +45,10 @@
                             <constraint firstItem="GJd-Yh-RWb" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" constant="20" id="title-leading"/>
                             <constraint firstItem="Bcu-3y-fUS" firstAttribute="trailing" secondItem="GJd-Yh-RWb" secondAttribute="trailing" constant="20" id="title-trailing"/>
                             <constraint firstItem="GJd-Yh-RWb" firstAttribute="bottom" secondItem="sub-title-label" secondAttribute="top" constant="-24" id="title-spacing"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="centerX" secondItem="version-label" secondAttribute="centerX" id="version-centerX"/>
+                            <constraint firstItem="version-label" firstAttribute="leading" secondItem="Bcu-3y-fUS" secondAttribute="leading" constant="20" id="version-leading"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="trailing" secondItem="version-label" secondAttribute="trailing" constant="20" id="version-trailing"/>
+                            <constraint firstItem="version-label" firstAttribute="top" secondItem="sub-title-label" secondAttribute="bottom" constant="24" id="version-spacing"/>
                         </constraints>
                     </view>
                 </viewController>

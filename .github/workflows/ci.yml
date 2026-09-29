@@ -29,6 +29,11 @@ jobs:
       - name: 시드 데이터 검사
         run: python3 Scripts/validate_questions.py
 
+      # 런치스크린은 코드 실행 전에 그려져 번들 버전을 읽을 수 없어 글자를
+      # 박아둔다. 빌드 번호를 올리고 이 글자를 잊으면 옛 번호가 남는다.
+      - name: 런치스크린 버전 표기 검사
+        run: python3 Scripts/validate_launch_screen.py
+
   build:
     name: iOS 시뮬레이터 빌드
     runs-on: macos-latest

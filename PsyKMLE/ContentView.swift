@@ -8,24 +8,10 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @AppStorage("welcomeShownForRelease") private var welcomeShownForRelease = ""
-
-    /// 버전뿐 아니라 빌드가 바뀌어도 시작화면을 한 번 다시 보여준다.
-    private var shouldShowWelcome: Bool {
-        welcomeShownForRelease != AppInfo.releaseKey
-    }
-
+    // 앱 이름과 버전은 런치스크린(LaunchScreen.storyboard)이 보여주므로
+    // 같은 내용을 반복하는 시작화면 없이 바로 문항 목록으로 들어간다.
     var body: some View {
-        Group {
-            if shouldShowWelcome {
-                WelcomeView()
-                    .transition(.opacity)
-            } else {
-                MainAppView()
-                    .transition(.opacity)
-            }
-        }
-        .animation(.easeInOut(duration: 0.35), value: shouldShowWelcome)
+        MainAppView()
     }
 }
 
@@ -51,5 +37,5 @@ func endDateReturn(year: Int, month: Int, day: Int) -> Date {
 }
 
 #Preview {
-    WelcomeView()
+    ContentView()
 }
