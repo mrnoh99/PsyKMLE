@@ -12,6 +12,13 @@ enum AppInfo {
         Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""
     }
 
+    /// "Ver 3.0  Build 9" 형태. 화면 상단 제목 아래처럼 좁은 자리에 쓴다.
+    static var shortVersionLabel: String {
+        guard !version.isEmpty else { return "" }
+        guard !build.isEmpty else { return "Ver \(version)" }
+        return "Ver \(version)  Build \(build)"
+    }
+
     /// "Version 3.0 (Build 9)" 형태. 값을 읽지 못하면 빈 문자열.
     static var versionLabel: String {
         guard !version.isEmpty else { return "" }

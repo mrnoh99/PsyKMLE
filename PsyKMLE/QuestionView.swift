@@ -437,6 +437,21 @@ struct QuestionView: View {
         //       .disabled(questionsDisabled)
         .navigationTitle("의사국시 대비 정신건강의학 풀이집(19-26)")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            // 제목과 버전·빌드를 두 줄로 보여준다. 한 줄에 모두 넣으면
+            // iPhone의 좁은 제목 영역에서 잘린다.
+            ToolbarItem(placement: .principal) {
+                VStack(spacing: 1) {
+                    Text("의사국시 대비 정신건강의학 풀이집(19-26)")
+                        .font(.headline)
+                    Text(AppInfo.shortVersionLabel)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+                .lineLimit(1)
+                .minimumScaleFactor(0.6)
+            }
+        }
         .sheet(isPresented: self.$presentInspector) {
             InspectorView(presentInspector: $presentInspector)
                 .inspectorSheetPresentation(selection: $inspectorSheetDetent)
