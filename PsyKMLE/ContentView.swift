@@ -19,10 +19,13 @@ struct ContentView: View {
         Group {
             if shouldShowWelcome {
                 WelcomeView()
+                    .transition(.opacity)
             } else {
                 MainAppView()
+                    .transition(.opacity)
             }
         }
+        .animation(.easeInOut(duration: 0.35), value: shouldShowWelcome)
     }
 }
 

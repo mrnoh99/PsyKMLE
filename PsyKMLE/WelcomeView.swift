@@ -2,7 +2,9 @@ import SwiftUI
 
 struct WelcomeView: View {
     @AppStorage("welcomeShownForRelease") private var welcomeShownForRelease = ""
-    @State private var showStartButton = false
+
+    /// 시작화면이 머무는 시간. 지나면 버튼 없이 저절로 문항 목록으로 넘어간다.
+    private let displayDuration: Duration = .seconds(2)
 
     var body: some View {
         ZStack {
@@ -30,26 +32,18 @@ struct WelcomeView: View {
             }
             .padding()
         }
-        .safeAreaInset(edge: .bottom) {
-            Button("시작하기") {
-                welcomeShownForRelease = AppInfo.releaseKey
-            }
-            .font(.headline)
-            .frame(maxWidth: .infinity)
-            .padding(.vertical, 14)
-            .background(Color.accentColor)
-            .foregroundStyle(.white)
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-            .padding(.horizontal, 24)
-            .padding(.bottom, 24)
-            .opacity(showStartButton ? 1 : 0)
-            .offset(y: showStartButton ? 0 : 16)
+        // 기다리지 않고 바로 넘어가고 싶을 때를 위해 화면 어디를 눌러도 진행한다.
+        .contentShape(Rectangle())
+        .onTapGesture(perform: proceed)
+        .task {
+            try? await Task.sleep(for: displayDuration)
+            guard !Task.isCancelled else { return }
+            proceed()
         }
-        .onAppear {
-            withAnimation(.easeOut(duration: 0.4).delay(0.3)) {
-                showStartButton = true
-            }
-        }
+    }
+
+    private func proceed() {
+        welcomeShownForRelease = AppInfo.releaseKey
     }
 }
 
