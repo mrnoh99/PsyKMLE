@@ -374,7 +374,7 @@ private extension InspectorView {
             앱 사용, 오류 신고, 문항 관련 문의, 기능 제안은 아래 이메일로 연락해 주세요.
 
             • jsnoh2010@gmail.com
-            • 고객지원 페이지: https://mrnoh99.github.io/PsyKMLE/docs/support.html
+            • 고객지원 페이지: https://mrnoh99.github.io/PsyKMLE/support.html
             """)
             .inspectorBodyStyle()
         }
