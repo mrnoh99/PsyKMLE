@@ -22,8 +22,6 @@ struct StartListView: View {
     // 글자 크기 설정(Dynamic Type)을 따라 함께 커진다.
     @ScaledMetric(relativeTo: .body) private var numberWidth: CGFloat = 34
     @ScaledMetric(relativeTo: .body) private var iconWidth: CGFloat = 26
-    // iPhone 왼쪽 칸 폭. "2026-1"처럼 차수가 붙은 연도가 한 줄에 들어가야 한다.
-    @ScaledMetric(relativeTo: .body) private var compactColumnWidth: CGFloat = 50
     // iPad처럼 넓은 화면(regular)에서는 행 위아래와 열 사이를 넓혀 여유 있게 보이게 한다.
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     private var isRegularWidth: Bool { horizontalSizeClass == .regular }
@@ -43,28 +41,22 @@ struct StartListView: View {
                     Text(question.year)
                         .monospacedDigit()
                         .fixedSize()
-                    sentenceText
+                    sentenceText(showsYear: false)
                     memoButton
                 }
             } else {
                 // iPhone: 폭이 좁아 한 줄에 모두 두면 문장이 예닐곱 줄로 쪼개진다.
-                // 번호·별표·결과·연도를 왼쪽 한 칸에 세로로 쌓는다. 문항 번호(예: 260130)만으로는
-                // 2026년 1차·2차를 구별할 수 없어 연도는 작은 글씨로 남긴다.
+                // 번호·별표·결과를 왼쪽 한 칸에 세로로 쌓고, 연도는 문장 앞에 붙인다.
+                // 문항 번호(예: 260130)만으로는 2026년 1차·2차를 구별할 수 없어 연도가 필요하다.
                 HStack(alignment: .center, spacing: columnSpacing) {
                     VStack(spacing: 2) {
                         numberText
                         starIcon
                         statusIcon
                             .frame(width: iconWidth, height: iconWidth)
-                        Text(question.year)
-                            .font(.caption2)
-                            .monospacedDigit()
-                            .foregroundStyle(.secondary)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.8)
                     }
-                    .frame(width: compactColumnWidth)
-                    sentenceText
+                    .frame(width: numberWidth)
+                    sentenceText(showsYear: true)
                     memoButton
                 }
             }
@@ -96,8 +88,13 @@ struct StartListView: View {
     }
 
     // 문제 문장은 남는 폭을 모두 쓰고 가로·세로 가운데에 맞춘다.
-    private var sentenceText: some View {
-        Text("\(question.intro)  (\(question.id))")
+    // iPhone에서는 연도 칸이 없으므로 문장 앞에 연도를 다른 색(파랑·굵게)으로 붙여 구분한다.
+    private func sentenceText(showsYear: Bool) -> some View {
+        let sentence = "\(question.intro)  (\(question.id))"
+        let text: Text = showsYear
+            ? Text("\(Text(question.year).foregroundStyle(Color.blue).bold())  \(sentence)")
+            : Text(sentence)
+        return text
             .textSelection(.disabled)
             .multilineTextAlignment(.center)
             .frame(maxWidth: .infinity, alignment: .center)
