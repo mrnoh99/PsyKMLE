@@ -4,14 +4,6 @@ struct WelcomeView: View {
     @AppStorage("welcomeShownForVersion") private var welcomeShownForVersion = ""
     @State private var showStartButton = false
 
-    private var appVersion: String {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-    }
-
-    private var appBuild: String {
-        Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""
-    }
-
     var body: some View {
         ZStack {
             Color(white: 0.333)
@@ -30,7 +22,7 @@ struct WelcomeView: View {
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.white)
 
-                Text("Version \(appVersion) (Build \(appBuild))")
+                Text(AppInfo.versionLabel)
                     .font(.subheadline)
                     .foregroundStyle(.white.opacity(0.7))
 
@@ -40,7 +32,7 @@ struct WelcomeView: View {
         }
         .safeAreaInset(edge: .bottom) {
             Button("시작하기") {
-                welcomeShownForVersion = appVersion
+                welcomeShownForVersion = AppInfo.version
             }
             .font(.headline)
             .frame(maxWidth: .infinity)

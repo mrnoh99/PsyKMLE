@@ -395,6 +395,10 @@ private extension InspectorView {
             .font(.headline)
             .multilineTextAlignment(.center)
             .padding(.horizontal)
+
+            Text(AppInfo.versionLabel)
+                .font(.footnote)
+                .foregroundStyle(.secondary)
         }
         .padding(.bottom, 8)
         .sheet(isPresented: $showCreditView) {

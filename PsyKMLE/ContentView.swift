@@ -10,12 +10,8 @@ import SwiftData
 struct ContentView: View {
     @AppStorage("welcomeShownForVersion") private var welcomeShownForVersion = ""
 
-    private var appVersion: String {
-        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
-    }
-
     private var shouldShowWelcome: Bool {
-        welcomeShownForVersion != appVersion
+        welcomeShownForVersion != AppInfo.version
     }
 
     var body: some View {

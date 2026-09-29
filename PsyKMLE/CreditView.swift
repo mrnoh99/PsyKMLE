@@ -12,6 +12,10 @@ struct CreditView: View {
                     Text("아주대학교 의과대학 정신과학교실 교수")
                     Text("jsnoh2010@gmail.com")
 
+                    Text(AppInfo.versionLabel)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+
                     Text("Acknowledgement")
                         .font(.title3)
                         .bold()
